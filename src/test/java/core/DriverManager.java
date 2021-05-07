@@ -18,7 +18,7 @@ public class DriverManager {
         driver.manage().window().maximize();
     }
 
-    protected void initializePage(){
+    public void initializePage(){
         PageFactory.initElements(driver,this);
     }
 
