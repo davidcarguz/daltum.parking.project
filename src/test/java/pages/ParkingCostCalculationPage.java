@@ -92,11 +92,13 @@ public class ParkingCostCalculationPage extends DriverManager {
             }else if(type.equalsIgnoreCase("leaving")){
                 edt_leavingTime.clear();
                 edt_leavingTime.sendKeys(time);
-                Thread.sleep(10000);
             }
         }catch (Exception e){
             throw new Error("An error occurred when setting the "+type+" time.",e);
         }
+    }
 
+    public void validateParkingCost(String entryDate, String entryTime, String leavingDate, String leavingTime) {
+        calculateParkingCost(entryDate, entryTime, leavingDate, leavingTime);
     }
 }
