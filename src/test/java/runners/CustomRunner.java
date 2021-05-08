@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features/",
         glue = "step_definitions",
-        tags = "@LessThan5Hours",
+        tags = "@Short-Term",
         snippets = CucumberOptions.SnippetType.CAMELCASE
 )
 public class CustomRunner {

@@ -50,9 +50,35 @@ public class Utils extends DriverManager {
                     cost = 18;
                 }
                 break;
+
+            case "short-term":
+                double totalHalfHours = weeks * 336 + days * 48 + hours * 2;
+                if(minutes >= 30){
+                    totalHalfHours += 1;
+                    minutes -= 30;
+                    totalHalfHours += minutes / 30.0;
+                }else{
+                    totalHalfHours += minutes / 30.0;
+                }
+                if(days >= 1){
+                    cost = days * 24;
+                    totalHalfHours -= days * 48;
+                }
+                if(totalHalfHours >= 2 ){
+                    cost += hours * 2;
+                    totalHalfHours -= hours * 2;
+                }
+                if(totalHalfHours >= 1){
+                    cost += 1;
+                    totalHalfHours -= 1;
+                }
+                if(totalHalfHours > 0){
+                    cost += 1;
+                }
         }
 
         return cost;
+
     }
 
     private static Date stringToDate(String dateString){

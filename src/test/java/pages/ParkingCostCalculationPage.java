@@ -1,6 +1,7 @@
 package pages;
 
 import core.DriverManager;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,6 +37,12 @@ public class ParkingCostCalculationPage extends DriverManager {
 
     @FindBy(how = How.CSS , using = "input[name = 'LeavingTime']")
     WebElement edt_leavingTime;
+
+    @FindBy(how = How.CSS , using = "span[class = 'SubHead'] b")
+    WebElement lbl_cost;
+
+    @FindBy(how = How.CSS , using = "input[type = 'submit']")
+    WebElement btn_calculate;
 
     public void selectParkingType(String parkingType) {
         try {
@@ -80,7 +87,7 @@ public class ParkingCostCalculationPage extends DriverManager {
             return this;
 
         }catch (Exception e){
-            throw new Error("An error occurred when setting "+type+" date through calendar page.",e);
+            throw new Error("An error occurred when setting "+type+" date through calendar page.", e);
         }
     }
 
@@ -94,11 +101,23 @@ public class ParkingCostCalculationPage extends DriverManager {
                 edt_leavingTime.sendKeys(time);
             }
         }catch (Exception e){
-            throw new Error("An error occurred when setting the "+type+" time.",e);
+            throw new Error("An error occurred when setting the "+type+" time.", e);
         }
+    }
+
+    public ParkingCostCalculationPage clickOnCalculateButton(){
+        try{
+            btn_calculate.click();
+        }catch(Exception e){
+            throw new Error("An error occurred when trying to click on Calculate button", e);
+        }
+        return this;
     }
 
     public void validateParkingCost(String parkingType,String entryDate, String entryTime, String leavingDate, String leavingTime) {
         System.out.println("COST= "+calculateParkingCost(parkingType,entryDate, entryTime, leavingDate, leavingTime));
+        double calculatedCost = calculateParkingCost(parkingType,entryDate, entryTime, leavingDate, leavingTime);
+        double obtainedCost = Double.parseDouble(lbl_cost.getText().replaceAll("[^0-9.]",""));
+        Assert.assertEquals(calculatedCost , obtainedCost , 0.0);
     }
 }
