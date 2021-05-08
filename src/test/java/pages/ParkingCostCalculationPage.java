@@ -98,7 +98,7 @@ public class ParkingCostCalculationPage extends DriverManager {
         }
     }
 
-    public void validateParkingCost(String entryDate, String entryTime, String leavingDate, String leavingTime) {
-        calculateParkingCost(entryDate, entryTime, leavingDate, leavingTime);
+    public void validateParkingCost(String parkingType,String entryDate, String entryTime, String leavingDate, String leavingTime) {
+        System.out.println("COST= "+calculateParkingCost(parkingType,entryDate, entryTime, leavingDate, leavingTime));
     }
 }
