@@ -75,6 +75,21 @@ public class Utils extends DriverManager {
                 if(totalHalfHours > 0){
                     cost += 1;
                 }
+            case "long-term garage":
+                cost = weeks * 72 + days * 12 + hours * 2;
+                if(minutes > 0){
+                    cost += 2;
+                }
+            case "long-term surface":
+                cost = weeks * 60 + days * 10 + hours * 2;
+                if(minutes > 0){
+                    cost += 2;
+                }
+            case "economy parking":
+                cost = weeks * 54 + days * 9 + hours * 2;
+                if(minutes > 0){
+                    cost += 2;
+                }
         }
 
         return cost;
