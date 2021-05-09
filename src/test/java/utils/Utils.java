@@ -39,12 +39,12 @@ public class Utils extends DriverManager {
             case "valet parking":
                 double totalDays = (weeks * 7) + days;
                 double totalMinutes = (hours * 60) + minutes;
-                if(totalDays > 1){
+                if(totalDays >= 1){
                     cost = totalDays * 18;
                     if(hours > 0 || minutes > 0){
                         cost += 18;
                     }
-                }else if(totalMinutes <= 300){
+                }else if(totalMinutes <= 300 ){
                     cost = 12;
                 }else{
                     cost = 18;
@@ -53,43 +53,71 @@ public class Utils extends DriverManager {
 
             case "short-term":
                 double totalHalfHours = weeks * 336 + days * 48 + hours * 2;
-                if(minutes >= 30){
-                    totalHalfHours += 1;
-                    minutes -= 30;
-                    totalHalfHours += minutes / 30.0;
-                }else{
-                    totalHalfHours += minutes / 30.0;
+                if(weeks == 0.0 && days == 0.0 && hours == 0.0 && minutes > 0){
+                    if(minutes <=59){
+                        cost = 2;
+                    }
+                }else {
+                    if (minutes >= 30) {
+                        totalHalfHours += 1;
+                        minutes -= 30;
+                        totalHalfHours += minutes / 30.0;
+                    } else {
+                        totalHalfHours += minutes / 30.0;
+                    }
+                    if (days >= 1) {
+                        cost = days * 24;
+                        totalHalfHours -= days * 48;
+                    }
+                    if (totalHalfHours >= 2) {
+                        cost += hours * 2;
+                        totalHalfHours -= hours * 2;
+                    }
+                    if (totalHalfHours >= 1) {
+                        cost += 1;
+                        totalHalfHours -= 1;
+                    }
+                    if (totalHalfHours > 0) {
+                        cost += 1;
+                    }
                 }
-                if(days >= 1){
-                    cost = days * 24;
-                    totalHalfHours -= days * 48;
-                }
-                if(totalHalfHours >= 2 ){
-                    cost += hours * 2;
-                    totalHalfHours -= hours * 2;
-                }
-                if(totalHalfHours >= 1){
-                    cost += 1;
-                    totalHalfHours -= 1;
-                }
-                if(totalHalfHours > 0){
-                    cost += 1;
-                }
+                break;
             case "long-term garage":
-                cost = weeks * 72 + days * 12 + hours * 2;
+
+                cost = weeks * 72 + days * 12;
+                if(hours < 6){
+                    cost += hours * 2;
+                }else{
+                    cost += 12;
+                }
                 if(minutes > 0){
                     cost += 2;
                 }
+                break;
             case "long-term surface":
-                cost = weeks * 60 + days * 10 + hours * 2;
+                cost = weeks * 60 + days * 10;
+                if(hours < 5){
+                    cost += hours * 2;
+                }else{
+                    cost += 10;
+                }
                 if(minutes > 0){
                     cost += 2;
                 }
+                break;
             case "economy parking":
-                cost = weeks * 54 + days * 9 + hours * 2;
+                cost = weeks * 54 + days * 9;
+                if(hours < 5){
+                    cost += hours * 2;
+                }else{
+                    cost += 9;
+                }
                 if(minutes > 0){
                     cost += 2;
                 }
+                break;
+            default:
+                System.out.println("Parking type selected is not supported.");
         }
 
         return cost;
