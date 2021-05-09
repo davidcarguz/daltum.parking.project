@@ -44,6 +44,9 @@ public class ParkingCostCalculationPage extends DriverManager {
     @FindBy(how = How.CSS , using = "input[type = 'submit']")
     WebElement btn_calculate;
 
+    @FindBy(how = How.CSS , using = "td[class = 'SubHead'] b")
+    WebElement lbl_error;
+
     public void selectParkingType(String parkingType) {
         try {
             Select slt_parkingType = new Select(drp_parkingType);
@@ -119,5 +122,25 @@ public class ParkingCostCalculationPage extends DriverManager {
         double calculatedCost = calculateParkingCost(parkingType,entryDate, entryTime, leavingDate, leavingTime);
         double obtainedCost = Double.parseDouble(lbl_cost.getText().replaceAll("[^0-9.]",""));
         Assert.assertEquals(calculatedCost , obtainedCost , 0.0);
+    }
+
+    public void validateErrorMessage(String errorMessage) {
+        try{
+            String errorObtained = lbl_error.getText();
+            Assert.assertEquals(errorMessage, errorObtained);
+        }catch (Exception e){
+            throw new Error("An error occurred validating the error message.", e);
+        }
+    }
+
+    public void validateCost(String cost) {
+        try{
+            double givenCost = Double.parseDouble(cost);
+            String rawObtainedCost = lbl_cost.getText().replaceAll("[^0-9.]" , "");
+            double obtainedCost = Double.parseDouble(rawObtainedCost);
+            Assert.assertTrue(obtainedCost == givenCost);
+        }catch(Exception e){
+            throw new Error("Error validating the cost.", e);
+        }
     }
 }

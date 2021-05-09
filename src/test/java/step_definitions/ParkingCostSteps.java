@@ -27,5 +27,14 @@ public class ParkingCostSteps implements En {
             parkingCostCalculationPage.initializePage();
             parkingCostCalculationPage.clickOnCalculateButton().validateParkingCost(parkingType,entryDate, entryTime, leavingDate, leavingTime);
         });
+
+        Then("user validates error message {string}", (String errorMessage) -> {
+            parkingCostCalculationPage.initializePage();
+            parkingCostCalculationPage.clickOnCalculateButton().validateErrorMessage(errorMessage);
+        });
+
+        Then("user validates parking cost should be {string}", (String cost) -> {
+            parkingCostCalculationPage.clickOnCalculateButton().validateCost(cost);
+        });
     }
 }
