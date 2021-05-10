@@ -1,4 +1,4 @@
-@TimeValidations
+@TimeValidations @Regression
   Feature: Scenarios related to time validations perform by the application
 
     @EarlierLeavingDate
